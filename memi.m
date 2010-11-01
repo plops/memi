@@ -31,15 +31,16 @@ end
 %% spot width for lcos and mma
 rl=.1; 
 rm=.1;
-%%
+%% define either smooth or b/w lcos image
 %lcos=exp(-rr(s,'freq').^2/(rl/2)^2)
 lcos=rr(s,'freq')<rl/2
-%%
+%% define either smooth or b/w mma image
 mma=exp(-((xx(s,'freq')-.2/2).^2 + (yy(s,'freq')-.3/2).^2)/(rm/2)^2);
 %mma=((xx(s,'freq')-.2/2).^2 + (yy(s,'freq')-.3/2).^2)<(rm/2)^2;
 overlay(255*mma,~aperture)
 
-%% spot size of mma in k-space
+%% spot size of mma in k-space, the smaller the mma, the less illumination
+%% angles are needed for the incoherent image
 rmk=2/(s(1)*pi*rm);
 abs(ft(mma))/max(abs(ft(mma)))-exp(-rr(s,'freq').^2/rmk^2);
 rmk_pixels=rmk*256;
